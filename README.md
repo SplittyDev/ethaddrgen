@@ -6,7 +6,7 @@ This is a partial rewrite of the [original repo](https://github.com/Limeth/ethad
 
 I've modernized the codebase, upgraded all the way from Rust `2015` to `2021` edition, updated all packages and substituted them for modern and maintained versions where it made sense, enabled full LTO on release builds, improved concurrency and lock contention and improved the performance by around `~5.7x` on my machine.
 
-On my machine, regex matching on a release build went from ~70kop/s to ~400kop/s.
+On my machine, regex matching on a release build went from `~70k op/s` to `~400k op/s`.
 
 ## Features
 - Regex support (`--regex`/`-e`): Use regex pattern matching
