@@ -7,7 +7,7 @@ keywords = ["ethereum", "cryptocurrency", "cracking", "hashing", "bruteforce"]
 readme = "README.md"
 license = "GPL-3.0"
 repository = "https://github.com/Limeth/ethaddrgen/"
-edition = "2015"
+edition = "2018"
 
 [dependencies]
 rayon = "1.0"
