@@ -1,17 +1,3 @@
-extern crate clap;
-extern crate num_cpus;
-extern crate once_cell;
-extern crate parking_lot;
-extern crate rand;
-extern crate rayon;
-extern crate regex;
-extern crate secp256k1;
-extern crate sha3;
-extern crate termcolor;
-#[macro_use]
-extern crate generic_array;
-extern crate typenum;
-
 #[macro_use]
 mod macros;
 mod patterns;
@@ -20,10 +6,10 @@ use clap::{Parser, ValueEnum};
 use once_cell::sync::Lazy;
 use parking_lot::{Mutex, RwLock};
 use crate::patterns::{Patterns, RegexPatterns};
-use rand::{rngs::OsRng, Rng, thread_rng};
+use rand::thread_rng;
 use regex::Regex;
-use secp256k1::{Message, Secp256k1};
-use sha3::{Digest, Keccak256};
+use secp256k1::Secp256k1;
+use sha3::Digest;
 use std::fmt::Write;
 use std::sync::Arc;
 use std::thread;
@@ -31,29 +17,19 @@ use std::time::Duration;
 use termcolor::{Buffer, BufferWriter, Color, ColorChoice};
 use typenum::U40;
 
-type AddressLengthType = U40;
+type _AddressLengthType = U40;
 
 const ADDRESS_LENGTH: usize = 40;
 const ADDRESS_BYTES: usize = ADDRESS_LENGTH / 2;
 const KECCAK_OUTPUT_BYTES: usize = 32;
 const ADDRESS_BYTE_INDEX: usize = KECCAK_OUTPUT_BYTES - ADDRESS_BYTES;
 
-static ADDRESS_PATTERN: Lazy<Regex> = Lazy::new(|| Regex::new(r"^[0-9a-f]{1,40}$").unwrap());
+static _ADDRESS_PATTERN: Lazy<Regex> = Lazy::new(|| Regex::new(r"^[0-9a-f]{1,40}$").unwrap());
 
 #[derive(Debug, Clone)]
 struct BruteforceResult {
     address: String,
     private_key: String,
-}
-
-fn parse_color_choice(string: &str) -> Result<ColorChoice, ()> {
-    Ok(match string {
-        "always" => ColorChoice::Always,
-        "always_ansi" => ColorChoice::AlwaysAnsi,
-        "auto" => ColorChoice::Auto,
-        "never" => ColorChoice::Never,
-        _ => return Err(()),
-    })
 }
 
 fn to_hex_string(slice: &[u8], expected_string_size: usize) -> String {
