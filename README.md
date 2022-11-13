@@ -1,11 +1,8 @@
-[![Build Status](https://travis-ci.org/Limeth/ethaddrgen.svg?branch=master)](https://travis-ci.org/Limeth/ethaddrgen)
-[![Build status](https://ci.appveyor.com/api/projects/status/tbnkiqgiqkrmtbcc?svg=true)](https://ci.appveyor.com/project/Limeth/ethaddrgen)
-
 # ethaddrgen
 > Get a shiny ethereum address and stand out from the crowd!
 
 ## Rewrite
-This is a partial rewrite of the original repo by @Limeth.
+This is a partial rewrite of the [original repo](https://github.com/Limeth/ethaddrgen) by [@Limeth](https://github.com/Limeth).
 
 I've modernized the codebase, upgraded all the way from Rust `2015` to `2021` edition, updated all packages and substituted them for modern and maintained versions where it made sense, enabled full LTO on release builds, improved concurrency and lock contention and improved the performance by around `~5.7x` on my machine.
 
