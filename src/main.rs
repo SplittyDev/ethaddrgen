@@ -1,20 +1,19 @@
 #[macro_use]
 mod macros;
 mod patterns;
+mod color_value;
 
-use clap::{Parser, ValueEnum};
+use crate::patterns::{Patterns, RegexPatterns};
+use clap::Parser;
+use color_value::ColorValue;
 use once_cell::sync::Lazy;
 use parking_lot::{Mutex, RwLock};
-use crate::patterns::{Patterns, RegexPatterns};
 use rand::thread_rng;
 use regex::Regex;
 use secp256k1::Secp256k1;
 use sha3::Digest;
-use std::fmt::Write;
-use std::sync::Arc;
-use std::thread;
-use std::time::Duration;
-use termcolor::{Buffer, BufferWriter, Color, ColorChoice};
+use std::{fmt::Write, sync::Arc, thread, time::Duration};
+use termcolor::{Buffer, BufferWriter, Color};
 use typenum::U40;
 
 type _AddressLengthType = U40;
@@ -42,31 +41,6 @@ fn to_hex_string(slice: &[u8], expected_string_size: usize) -> String {
     result
 }
 
-#[derive(Debug, Copy, Clone, ValueEnum)]
-enum ColorValue {
-    Always,
-    AlwaysAnsi,
-    Auto,
-    Never,
-}
-
-impl Default for ColorValue {
-    fn default() -> Self {
-        Self::Auto
-    }
-}
-
-impl From<ColorValue> for ColorChoice {
-    fn from(value: ColorValue) -> Self {
-        match value {
-            ColorValue::Always => Self::Always,
-            ColorValue::AlwaysAnsi => Self::AlwaysAnsi,
-            ColorValue::Auto => Self::Auto,
-            ColorValue::Never => Self::Never,
-        }
-    }
-}
-
 #[derive(Debug, Parser)]
 #[command(author, version, about, long_about = None)]
 struct Args {
@@ -90,7 +64,7 @@ struct Args {
         auto        -- Try to use colors, but don't force the issue.
                        If the console isn't available on Windows, or
                        if TERM=dumb, for example, then don't use colors.
-        never       -- Never emit colors.",
+        never       -- Never emit colors."
     )]
     #[arg(value_enum)]
     color: Option<ColorValue>,
@@ -246,7 +220,13 @@ fn main_pattern_type_selected<P: Patterns + 'static>(
                 }
 
                 let mut buffer = buffer_writer.lock().buffer();
-                cprint!(quiet, buffer, Color::Cyan, "{}", *iterations_this_second.read());
+                cprint!(
+                    quiet,
+                    buffer,
+                    Color::Cyan,
+                    "{}",
+                    *iterations_this_second.read()
+                );
                 cprintln!(quiet, buffer, Color::White, " addresses / second");
                 *iterations_this_second.write() = 0;
                 *sync_buffer.write() = Some(buffer);
