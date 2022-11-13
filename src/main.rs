@@ -19,7 +19,7 @@ mod patterns;
 use clap::{Parser, ValueEnum};
 use once_cell::sync::Lazy;
 use parking_lot::{Mutex, RwLock};
-use patterns::{Patterns, RegexPatterns};
+use crate::patterns::{Patterns, RegexPatterns};
 use rand::{rngs::OsRng, Rng, thread_rng};
 use regex::Regex;
 use secp256k1::{Message, Secp256k1};

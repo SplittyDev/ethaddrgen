@@ -1,4 +1,4 @@
-use patterns::{Pattern, Patterns};
+use crate::patterns::{Pattern, Patterns};
 use regex::{Regex, RegexBuilder};
 
 impl Pattern for Regex {
