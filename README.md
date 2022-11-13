@@ -1,11 +1,15 @@
-# ethaddrgen
 [![Build Status](https://travis-ci.org/Limeth/ethaddrgen.svg?branch=master)](https://travis-ci.org/Limeth/ethaddrgen)
 [![Build status](https://ci.appveyor.com/api/projects/status/tbnkiqgiqkrmtbcc?svg=true)](https://ci.appveyor.com/project/Limeth/ethaddrgen)
-#### Custom Ethereum address generator
-Get a shiny ethereum address and stand out from the crowd!
 
-[![asciicast](https://asciinema.org/a/cmidn81zwi1c2n49ij4co9pg9.png)](https://asciinema.org/a/cmidn81zwi1c2n49ij4co9pg9)
-Disclaimer: Do not use the private key shown in this demo; it's public, strangers could steal your Eth. Never share your private key with anyone. It's your and only your responsibility to keep your private key in secret.
+# ethaddrgen
+> Get a shiny ethereum address and stand out from the crowd!
+
+## Rewrite
+This is a partial rewrite of the original repo by @Limeth.
+
+I've modernized the codebase, upgraded all the way from Rust `2015` to `2021` edition, updated all packages and substituted them for modern and maintained versions where it made sense, enabled full LTO on release builds, improved concurrency and lock contention and improved the performance by around `~5.7x` on my machine.
+
+On my machine, regex matching on a release build went from ~70kop/s to ~400kop/s.
 
 ## Features
 - Regex support (`--regex`/`-e`): Use regex pattern matching
