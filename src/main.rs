@@ -56,13 +56,13 @@ impl Default for ColorValue {
     }
 }
 
-impl Into<ColorChoice> for ColorValue {
-    fn into(self) -> ColorChoice {
-        match self {
-            ColorValue::Always => ColorChoice::Always,
-            ColorValue::AlwaysAnsi => ColorChoice::AlwaysAnsi,
-            ColorValue::Auto => ColorChoice::Auto,
-            ColorValue::Never => ColorChoice::Never,
+impl From<ColorValue> for ColorChoice {
+    fn from(value: ColorValue) -> Self {
+        match value {
+            ColorValue::Always => Self::Always,
+            ColorValue::AlwaysAnsi => Self::AlwaysAnsi,
+            ColorValue::Auto => Self::Auto,
+            ColorValue::Never => Self::Never,
         }
     }
 }
@@ -126,7 +126,7 @@ fn main_pattern_type_selected<P: Patterns + 'static>(
     buffer_writer: Arc<Mutex<BufferWriter>>,
     patterns: Arc<P>,
 ) {
-    if patterns.len() <= 0 {
+    if patterns.len() == 0 {
         let mut stdout = buffer_writer.lock().buffer();
         cprintln!(
             false,
@@ -254,7 +254,7 @@ fn main_pattern_type_selected<P: Patterns + 'static>(
         }
 
         'dance: loop {
-            if *working_threads.read() <= 0 {
+            if *working_threads.read() == 0 {
                 break 'dance;
             }
 

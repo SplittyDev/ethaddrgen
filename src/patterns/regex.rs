@@ -15,8 +15,8 @@ impl Pattern for Regex {
             .unicode(true)
             .build()
         {
-            Ok(result) => return Ok(result),
-            Err(error) => return Err(format!("Invalid regex: {}", error)),
+            Ok(result) => Ok(result),
+            Err(error) => Err(format!("Invalid regex: {}", error)),
         }
     }
 }
@@ -37,15 +37,15 @@ impl RegexPatterns {
 }
 
 impl Patterns for RegexPatterns {
-    fn contains(&self, address: &String) -> bool {
+    fn contains(&self, address: impl AsRef<str>) -> bool {
         // Linear search
         for pattern in &self.vec {
-            if pattern.matches(address) {
+            if pattern.matches(address.as_ref()) {
                 return true;
             }
         }
 
-        return false;
+        false
     }
 
     fn len(&self) -> usize {

@@ -11,7 +11,7 @@ trait Pattern: Display + Send + Sync + Sized {
 }
 
 pub trait Patterns: Sync + Send {
-    fn contains(&self, address: &String) -> bool;
+    fn contains(&self, address: impl AsRef<str>) -> bool;
     fn len(&self) -> usize;
 }
 
